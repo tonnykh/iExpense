@@ -11,10 +11,22 @@ import SwiftUI
 struct ContentView: View {
     @StateObject var expenses = Expenses()
     @State private var showAddExpense: Bool = false
+    @State private var type: String = "Personal"
     
+    let types: [String] = ["Business", "Personal"]
+
     var body: some View {
         NavigationStack {
             List {
+                Section {
+                    Picker("Type", selection: $type) {
+                        ForEach(types, id: \.self) {
+                            Text($0)
+                        }
+                    }
+                    .pickerStyle(.segmented)
+                }
+                
                 ForEach(expenses.items) { expense in
                     HStack {
                         VStack(alignment: .leading) {
@@ -25,6 +37,13 @@ struct ContentView: View {
                         
                         Spacer()
                         Text(expense.amount, format: .currency(code: "INR"))
+                            .foregroundColor(
+                                expense.amount >= 1000 ?
+                                    .red :
+                                    expense.amount > 10 ?
+                                    .orange :
+                                    .green
+                            )
                     }
                 }
                 .onDelete(perform: removeRows)
@@ -40,6 +59,13 @@ struct ContentView: View {
             .sheet(isPresented: $showAddExpense) {
                 AddView(expenses: expenses)
             }
+            .listStyle(.plain)
+            .toolbar {
+                ToolbarItem(placement: .navigationBarLeading) {
+                    EditButton()
+                }
+            }
+            
         }
     }
     
