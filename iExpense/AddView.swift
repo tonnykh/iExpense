@@ -8,6 +8,8 @@
 import SwiftUI
 
 struct AddView: View {
+    @ObservedObject var expenses: Expenses
+    
     @State private var name: String = ""
     @State private var type: String = "Personal"
     @State private var amount: Double = 0.0
@@ -33,6 +35,6 @@ struct AddView: View {
 
 struct AddView_Previews: PreviewProvider {
     static var previews: some View {
-        AddView()
+        AddView(expenses: Expenses())
     }
 }
