@@ -14,7 +14,7 @@ struct ContentView: View {
     var body: some View {
         NavigationStack {
             List {
-                ForEach(expenses.items, id: \.name) { expense in
+                ForEach(expenses.items) { expense in
                     Text(expense.name)
                 }
                 .onDelete(perform: removeRows)
