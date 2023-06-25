@@ -10,5 +10,5 @@ import Foundation
 struct ExpenseItem {
     let name: String
     let type: String
-    let amount: String
+    let amount: Int
 }
